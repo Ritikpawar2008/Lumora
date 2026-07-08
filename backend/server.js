@@ -1,34 +1,27 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import emailRoutes from "./routes/email.js";
 
 dotenv.config();
 
 const app = express();
+
 app.use(cors());
+
 app.use(express.json());
 
-app.post('/api/send-email', async (req, res) => {
-  try {
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'LUMORA <onboarding@resend.dev>',
-        to: [req.body.to],
-        subject: req.body.subject,
-        text: req.body.message,
-      }),
-    });
+app.use("/api", emailRoutes);
 
-    const data = await response.json();
-    res.status(response.status).json(data);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+app.get("/", (req, res) => {
+    res.json({
+        success: true,
+        message: "🚀 Lumora Backend Running Successfully"
+    });
 });
 
-app.listen(3000, () => console.log('Proxy running on http://localhost:3000'));
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+});

@@ -1,1 +1,0 @@
-const resend = new Resend('re_T4wKF2fF_FWjPykMBp8qhEVEwCsKZZ3bx');
