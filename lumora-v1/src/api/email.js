@@ -1,6 +1,6 @@
 export async function sendEmail(data) {
 
-    const response = await fetch("http://localhost:5000/api/send-email", {
+    const response = await fetch("backend-beta-r.vercel.app/api/send-email", {
         method: "POST",
 
         headers: {
